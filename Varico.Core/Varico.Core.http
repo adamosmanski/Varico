@@ -1,0 +1,6 @@
+@Varico.Core_HostAddress = http://localhost:5266
+
+GET {{Varico.Core_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
