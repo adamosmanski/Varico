@@ -11,6 +11,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideHttpClient  } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
