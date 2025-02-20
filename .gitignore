@@ -2,3 +2,6 @@
 /Varico.Core/obj
 /Varico.UI/.vscode
 /.vs
+/Varico.Core/bin
+/Varico.EF/bin
+/Varico.EF/obj
