@@ -28,11 +28,29 @@ namespace Varico.EF.Models
         [MaxLength(200)]
         public string Email { get; set; }
 
+        [Required]
+        [MaxLength(100)]
+        public string Password { get; set; }
+
         [Phone]
         [MaxLength(15)]
         public string Phone { get; set; }
 
-        public virtual Address Address { get; set; }
+        [Required]
+        [MaxLength(200)]
+        public string Street { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string City { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string PostalCode { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Country { get; set; }
 
         public virtual Cars? Car { get; set; }
     }
