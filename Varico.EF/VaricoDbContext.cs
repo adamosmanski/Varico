@@ -11,17 +11,11 @@ namespace Varico.EF.Models
         
         public DbSet<Users> Users { get; set; }
 
-        public DbSet<Address> Addresses { get; set; }
 
         public DbSet<Cars> Cars { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Users>()
-                .HasOne(u => u.Address)
-                .WithOne(a => a.User)
-                .HasForeignKey<Address>(a => a.UserId);
-
             modelBuilder.Entity<Cars>()
                 .HasOne(c => c.ReservedBy)
                 .WithMany() 
