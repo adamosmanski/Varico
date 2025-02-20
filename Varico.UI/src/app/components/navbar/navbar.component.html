@@ -1,6 +1,12 @@
 <mat-toolbar color="primary">
     <span class="logo">Varico</span>
     <span class="spacer"></span>  
-    <button mat-button routerLink="/login">Login</button>
-    <button mat-button (click)="openRegisterDialog()">Register</button>
+    <ng-container *ngIf="!isLoggedIn">
+      <button mat-button (click)="openLoginDialog()">Zaloguj się</button>
+      <button mat-button (click)="openRegisterDialog()">Zarejestruj się</button>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn">
+      <button mat-button (click)="logout()">Wyloguj</button>
+    </ng-container>
   </mat-toolbar>
+
