@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics.Contracts;
 
 namespace Varico.EF.Models
 {
@@ -40,7 +41,10 @@ namespace Varico.EF.Models
         [ForeignKey("ReservedById")]
         public virtual Users ReservedBy { get; set; }
 
-        
+        [Required]
+        public string PictureURL { get; set; }
+
+
     }
 
 }
