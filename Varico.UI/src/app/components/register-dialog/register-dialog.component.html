@@ -1,0 +1,73 @@
+<h2 mat-dialog-title class="dialog-title">Rejestracja</h2>
+
+<div class="modal-content">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Imię</mat-label>
+      <mat-icon matPrefix>person</mat-icon>
+      <input matInput formControlName="firstName" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nazwisko</mat-label>
+      <mat-icon matPrefix>badge</mat-icon>
+      <input matInput formControlName="lastName" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <mat-icon matPrefix>email</mat-icon>
+      <input matInput type="email" formControlName="email" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hasło</mat-label>
+      <mat-icon matPrefix>lock</mat-icon>
+      <input matInput type="password" formControlName="password" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Potwierdź hasło</mat-label>
+      <mat-icon matPrefix>lock</mat-icon>
+      <input matInput type="password" formControlName="confirmPassword" required>
+      <mat-error *ngIf="registerForm.hasError('passwordMismatch')">
+        Hasła muszą być identyczne!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Telefon</mat-label>
+      <mat-icon matPrefix>phone</mat-icon>
+      <input matInput type="tel" formControlName="phone">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Ulica</mat-label>
+      <mat-icon matPrefix>home</mat-icon>
+      <input matInput formControlName="street">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Miasto</mat-label>
+      <mat-icon matPrefix>location_city</mat-icon>
+      <input matInput formControlName="city" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Kod pocztowy</mat-label>
+      <mat-icon matPrefix>markunread_mailbox</mat-icon>
+      <input matInput formControlName="postalCode" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Kraj</mat-label>
+      <mat-icon matPrefix>public</mat-icon>
+      <input matInput formControlName="country" required>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-raised-button type="button" (click)="close()">Anuluj</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Zarejestruj</button>
+    </div>
+  </form>
+</div>
