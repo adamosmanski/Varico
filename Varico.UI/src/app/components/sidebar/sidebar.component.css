@@ -1,0 +1,117 @@
+:host {
+  display: block;
+  height: 100vh;
+  width: 250px;
+  position: fixed;
+  left: 0;
+  top: 60px;
+  background: linear-gradient(to top, white, #3f51b5);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 999;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: width 0.3s ease;
+}
+
+.hidden {
+  transform: translateX(-100%);
+}
+
+.mat-drawer-container {
+  height: 100%;
+  background: transparent;
+}
+
+.mat-drawer {
+  width: 250px;
+  background: transparent;
+}
+
+button[mat-button] {
+  width: 95%;
+  padding: 12px 18px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  font-size: 14px;
+  text-align: left;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button[mat-button]:hover {
+  background-color: #1e3c72;
+  transform: translateX(5px);
+  cursor: pointer;
+  border-color: #1e3c72;
+}
+
+button[mat-button]:active {
+  background-color: #e1eaf7;
+  transform: translateX(2px);
+  border-color: #1e3c72;
+}
+
+.toggle-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.toggle-button mat-icon {
+  transition: transform 0.3s ease;
+}
+
+.mat-sidenav {
+  transition: width 0.3s ease;
+}
+
+.mat-sidenav.hidden {
+  width: 60px;
+}
+
+@media (max-width: 768px) {
+  :host {
+    width: 200px;
+    padding: 15px;
+  }
+
+  button[mat-button] {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  .toggle-button {
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  :host {
+    width: 180px;
+    padding: 10px;
+  }
+
+  button[mat-button] {
+    font-size: 11px;
+    padding: 8px 10px;
+  }
+
+  .toggle-button {
+    top: 5px;
+    right: 5px;
+    font-size: 18px;
+  }
+}
