@@ -54,21 +54,4 @@ namespace Varico.EF.Models
 
         public virtual Vehicle? Car { get; set; }
     }
-    
-    
-    public enum VehicleType
-    {
-        Passenger,
-        Truck,
-        Motorcycle
-    }
-
-    public enum BodyType
-    {
-        SUV,
-        HATCHBACK,
-        SEDAN,
-        KOMBI,
-        ANOTHER
-    }
 }
