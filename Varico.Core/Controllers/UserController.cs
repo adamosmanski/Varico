@@ -39,13 +39,14 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginUserCommand command)
     {
-        var isValidUser = await _mediator.Send(command);
+        var loginResponse = await _mediator.Send(command);
 
-        if (!isValidUser)
+        if (!loginResponse.IsValid)
         {
-            return Unauthorized(new { message = "Nieprawidłowy email lub hasło." });
+            return Unauthorized(new { message = loginResponse.Message });
         }
 
-        return Ok(new { message = "Zalogowano pomyślnie." });
+        return Ok(new { message = loginResponse.Message, userId = loginResponse.UserId });
     }
+
 }
