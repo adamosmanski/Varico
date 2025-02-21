@@ -1,0 +1,44 @@
+<div class="home-container" [class.shifted]="isLoggedIn">
+    <div class="banner">
+      <div class="banner-content" *ngIf="!isLoggedIn; else loggedInBanner">
+        <h1>🚗 Z nami wynajmiesz tanio pojazd! 🚀</h1>
+        <p class="description">Najlepsze ceny, największy wybór, pełna wygoda.</p>
+        <p class="cta">Sprawdź dostępne pojazdy i zarezerwuj już teraz!</p>
+      </div>
+  
+      <ng-template #loggedInBanner>
+        <h1>Wyszukaj pojazdy</h1>
+        <form (ngSubmit)="searchVehicles()">
+          <label for="model">Model:</label>
+          <input id="model" [(ngModel)]="searchCriteria.model" name="model" type="text">
+  
+          <label for="year">Rok produkcji:</label>
+          <input id="year" [(ngModel)]="searchCriteria.year" name="year" type="number">
+  
+          <label for="dateFrom">Od:</label>
+          <input id="dateFrom" [(ngModel)]="searchCriteria.dateFrom" name="dateFrom" type="date">
+  
+          <label for="dateTo">Do:</label>
+          <input id="dateTo" [(ngModel)]="searchCriteria.dateTo" name="dateTo" type="date">
+  
+          <button mat-button type="submit">Szukaj</button>
+        </form>
+      </ng-template>
+    </div>
+  
+    <h2>Dostępne pojazdy</h2>
+  
+    <div class="vehicle-list" *ngIf="vehicles.length > 0; else noVehicles">
+      <div class="vehicle-card" *ngFor="let vehicle of vehicles">
+        <img [src]="vehicle.pictureURL || 'assets/default-car.jpg'" [alt]="vehicle.brand + ' ' + vehicle.model" />
+        <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
+        <p><strong>Rok:</strong> {{ vehicle.productionYear }}</p>
+        <button mat-button *ngIf="isLoggedIn" mat-button (click)="viewDetails(vehicle)">Szczegóły</button>
+      </div>
+    </div>
+  
+    <ng-template #noVehicles>
+      <p>Brak dostępnych pojazdów w tej chwili.</p>
+    </ng-template>
+  </div>
+  
