@@ -16,6 +16,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 
 
 export const appConfig: ApplicationConfig = {
@@ -33,7 +34,8 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
       ReactiveFormsModule,
       FormsModule,
-      MatToolbarModule),
+      MatToolbarModule,
+      CurrencyPipe),
       provideHttpClient()
   ]
 };

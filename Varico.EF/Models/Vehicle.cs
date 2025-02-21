@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics.Contracts;
+using Microsoft.VisualBasic.FileIO;
 
 namespace Varico.EF.Models
 {
@@ -43,6 +44,35 @@ namespace Varico.EF.Models
 
         [Required]
         public string? PictureURL { get; set; }
-    }
 
+        [Required]
+        public double Mileage { get; set; }
+
+        [Required]
+        [EnumDataType(typeof(TransmissionType))]
+        public TransmissionType Transmission { get; set; }
+
+        [Required]
+        public double EngineCapacity { get; set; }
+
+        [Required]
+        public decimal Price { get; set; }
+
+        [Required]
+        [EnumDataType(typeof(FuelType))]
+        public FuelType FuelType { get; set; }
+
+        [Required]
+        [EnumDataType(typeof(DrivetrainType))]
+        public DrivetrainType Drivetrain { get; set; }
+
+        [Required]
+        public double Acceleration { get; set; }
+
+        [Required]
+        public double TrunkCapacity { get; set; }
+
+        [Required]
+        public double MaxSpeed { get; set; }
+    }
 }

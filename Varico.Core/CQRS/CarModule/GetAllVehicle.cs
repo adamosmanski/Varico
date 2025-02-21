@@ -14,7 +14,7 @@ namespace Varico.Core.CQRS.CarModule
         }
         public async Task<IEnumerable<Vehicle>> Handle(GetAllVehicleQuery request, CancellationToken cancellationToken)
         {
-            var vehicles = await _context.Vehicles.ToListAsync(cancellationToken);
+            var vehicles = await _context.Vehicles.Where(x=>x.Availability == true).ToListAsync(cancellationToken);
             return vehicles;
         }
     }
