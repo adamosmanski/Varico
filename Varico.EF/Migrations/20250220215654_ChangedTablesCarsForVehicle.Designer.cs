@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Varico.EF.Models;
 
@@ -10,9 +11,11 @@ using Varico.EF.Models;
 namespace Varico.EF.Migrations
 {
     [DbContext(typeof(VaricoDbContext))]
-    partial class VaricoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250220215654_ChangedTablesCarsForVehicle")]
+    partial class ChangedTablesCarsForVehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -115,7 +118,7 @@ namespace Varico.EF.Migrations
                     b.Property<int>("ProductionYear")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ReservedById")
+                    b.Property<int>("ReservedById")
                         .HasColumnType("int");
 
                     b.Property<int>("VehicleType")
@@ -275,7 +278,9 @@ namespace Varico.EF.Migrations
                 {
                     b.HasOne("Varico.EF.Models.Users", "ReservedBy")
                         .WithMany()
-                        .HasForeignKey("ReservedById");
+                        .HasForeignKey("ReservedById")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ReservedBy");
                 });
