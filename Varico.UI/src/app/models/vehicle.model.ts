@@ -17,7 +17,9 @@ export interface Vehicle {
   drivetrain: 'Front-Wheel' | 'Rear-Wheel' | 'All-Wheel';
   acceleration: number;
   trunkCapacity: number;
-  maxSpeed: number; 
+  maxSpeed: number;
+  reservedFrom: Date;
+  reservedTo: Date;
 }
 
 export enum VehicleType {
