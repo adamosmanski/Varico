@@ -5,11 +5,12 @@ import { AuthService } from './services/auth-service.service';
 import { SidebarComponent } from './components/sidebar/sidebar.component'; 
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { HomeComponent } from "./components/home/home.component";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, SidebarComponent, CommonModule],
+  imports: [RouterOutlet, NavbarComponent, SidebarComponent, CommonModule, HomeComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
