@@ -1,5 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, RouterModule } from '@angular/router';
+import { provideRouter } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { importProvidersFrom } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -17,6 +17,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common'; 
 import { FormsModule } from '@angular/forms';
 import { CurrencyPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 export const appConfig: ApplicationConfig = {
@@ -35,7 +36,8 @@ export const appConfig: ApplicationConfig = {
       ReactiveFormsModule,
       FormsModule,
       MatToolbarModule,
-      CurrencyPipe),
+      CurrencyPipe,
+      RouterModule),
       provideHttpClient()
   ]
 };
