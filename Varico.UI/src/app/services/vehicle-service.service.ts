@@ -15,6 +15,10 @@ export class VehicleService {
     private authService: AuthService
   ) {}
 
+  searchVehicles(brand: string): Observable<Vehicle[]> {
+    return this.http.get<Vehicle[]>(`${this.apiUrl}/search?brand=${brand}`);
+  }
+
   getVehicles(): Observable<Vehicle[]> {
     return this.http.get<Vehicle[]>(`${this.apiUrl}/getAllVehicles`);
   }

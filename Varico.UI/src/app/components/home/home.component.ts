@@ -109,8 +109,18 @@ export class HomeComponent implements OnInit {
       error: (err) => console.error('Błąd pobierania pojazdów:', err)
     });
   }
+
+
   searchVehicles(): void {
     console.log(this.searchCriteria);
+    this.vehicleService.searchVehicles(this.searchCriteria.brand).subscribe({
+      next: (data) => {
+        this.vehicles = data;
+      },
+      error: (err) => {
+        console.error('Błąd podczas wyszukiwania pojazdów:', err);
+      }
+    });
   }
 
   viewDetails(vehicle: Vehicle): void {
