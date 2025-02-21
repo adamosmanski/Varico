@@ -6,8 +6,15 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  private userId: number | null = null;
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
 
+  setUserId(id: number): void {
+    this.userId = id;
+  }
+  getUserId(): number | null {
+    return this.userId;
+  }
   login() {
     this.isLoggedInSubject.next(true);
   }
@@ -15,6 +22,7 @@ export class AuthService {
   logout() {
     this.isLoggedInSubject.next(false);
   }
+  
 }
 
 
