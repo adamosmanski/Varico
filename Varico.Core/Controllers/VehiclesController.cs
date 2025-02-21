@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Varico.Core.CQRS.CarModule;
+using Varico.Core.CQRS.UserModule;
 
 namespace Varico.Core.Controllers
 {
@@ -18,6 +20,31 @@ namespace Varico.Core.Controllers
         {
             var vehicles = await _mediator.Send(new GetAllVehicleQuery());
             return Ok(vehicles);
+        }
+        [HttpPost("reserveVehicle")]
+        public async Task<IActionResult> ReserveVehicle([FromBody] VehicleReservationRequest request)
+        {
+            var result = await _mediator.Send(request);
+
+            if (result.Success)
+            {
+                return Ok(new { message = result.Message });
+            }
+
+            return BadRequest(new { message = result.Message });
+        }
+        [HttpGet("reserved")]
+        public async Task<IActionResult> GetReservedVehicles([FromQuery] int userId)
+        {
+            var query = new GetAllVehicleNotAvailableQuery(userId);
+            var vehicles = await _mediator.Send(query);
+            return Ok(vehicles);
+        }
+        [HttpPatch("returnReservedVehicle")]
+        public async Task<IActionResult> ReturnReservedVehicle([FromBody] ReturnVehicleCommand command)
+        {
+            await _mediator.Send(command);
+            return NoContent();
         }
     }
 }
