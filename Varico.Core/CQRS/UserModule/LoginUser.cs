@@ -5,7 +5,7 @@ using Varico.EF.Models;
 
 namespace Varico.Core.CQRS.UserModule
 {
-    public class LoginUserCommand : IRequest<bool>
+    public class LoginUserCommand : IRequest<LoginResponse>
     {
         public string Email { get; set; }
         public string Password { get; set; }
@@ -16,8 +16,13 @@ namespace Varico.Core.CQRS.UserModule
             Password = password;
         }
     }
-
-    public class LoginUserHandler : IRequestHandler<LoginUserCommand, bool>
+    public class LoginResponse
+    {
+        public bool IsValid { get; set; }
+        public int? UserId { get; set; }
+        public string Message { get; set; }
+    }
+    public class LoginUserHandler : IRequestHandler<LoginUserCommand, LoginResponse>
     {
         private readonly VaricoDbContext _context;
         private readonly IPasswordService _passwordService;
@@ -28,12 +33,37 @@ namespace Varico.Core.CQRS.UserModule
             _passwordService = passwordService;
         }
 
-        public async Task<bool> Handle(LoginUserCommand request, CancellationToken cancellationToken)
+        public async Task<LoginResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email, cancellationToken);
-            if (user == null) return false;
 
-            return _passwordService.VerifyPassword(request.Password, user.Password);
+            if (user == null)
+            {
+                return new LoginResponse
+                {
+                    IsValid = false,
+                    Message = "Nieprawidłowy email lub hasło."
+                };
+            }
+
+            var isPasswordValid = _passwordService.VerifyPassword(request.Password, user.Password);
+
+            if (!isPasswordValid)
+            {
+                return new LoginResponse
+                {
+                    IsValid = false,
+                    Message = "Nieprawidłowy email lub hasło."
+                };
+            }
+
+            return new LoginResponse
+            {
+                IsValid = true,
+                UserId = user.Id,
+                Message = "Zalogowano pomyślnie."
+            };
         }
     }
+
 }
