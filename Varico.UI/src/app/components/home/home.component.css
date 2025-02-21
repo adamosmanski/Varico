@@ -124,43 +124,70 @@ button[mat-button]:active {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
-  width: 100%;
-}
-
-.vehicle-details-modal-content {
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   text-align: center;
 }
 
-
-
-.close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  cursor: pointer;
-  font-size: 24px;
+.vehicle-details-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
+.dialog-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.vehicle-details-container {
+  display: flex;
+  gap: 30px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.vehicle-info {
+  width: 50%;
+  text-align: left;
+}
+
+.reservation-section {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.reservation-section label {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.reservation-section input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
 
 .button-container {
   display: flex;
   justify-content: space-between;
-  margin-top: 15px;
+  gap: 15px;
 }
 
 .close-button, .reserve-button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 16px;
   border-radius: 5px;
-}
-
-.close-button {
-  background-color: #d32f2f;
-  color: white;
-}
-
-.reserve-button {
-  background-color: #388e3c;
-  color: white;
+  text-align: center;
+  font-weight: bold;
+  width: 100%;
+  border: none;
 }

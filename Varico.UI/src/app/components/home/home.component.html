@@ -33,7 +33,7 @@
       <img [src]="vehicle.pictureURL || 'assets/default-car.jpg'" [alt]="vehicle.brand + ' ' + vehicle.model" />
       <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
       <p><strong>Rok:</strong> {{ vehicle.productionYear }}</p>
-      <button mat-button *ngIf="isLoggedIn" mat-button (click)="viewDetails(vehicle)">Szczegóły</button>
+      <button mat-button *ngIf="isLoggedIn" (click)="viewDetails(vehicle)">Szczegóły</button>
     </div>
   </div>
 
@@ -45,26 +45,43 @@
   
   <div class="vehicle-details-modal" *ngIf="selectedVehicle">
     <div class="vehicle-details-modal-content">
-      <h2 mat-dialog-title class="dialog-title">Szczegóły pojazdu</h2>
-      <h3>{{ selectedVehicle.brand }} {{ selectedVehicle.model }}</h3>
-      
-      <p><strong>Rok produkcji:</strong> {{ selectedVehicle.productionYear }}</p>
-      <p><strong>Typ pojazdu:</strong> {{ getVehicleTypeName(selectedVehicle.vehicleType) }}</p>
-      <p><strong>Typ nadwozia:</strong> {{ getBodyTypeName(selectedVehicle.bodyType) }}</p>
-      <p><strong>Przebieg:</strong> {{ selectedVehicle.mileage | number }} km</p>
-      <p><strong>Skrzynia biegów:</strong> {{ getTransmissionTypeName(selectedVehicle.transmission) }}</p>
-      <p><strong>Pojemność silnika:</strong> {{ selectedVehicle.engineCapacity }} L</p>
-      <p><strong>Paliwo:</strong> {{ getFuelTypeName(selectedVehicle.fuelType) }}</p>
-      <p><strong>Napęd:</strong> {{ getDrivetrainTypeName(selectedVehicle.drivetrain) }}</p>
-      <p><strong>Pojemność bagażnika:</strong> {{ selectedVehicle.trunkCapacity }} L</p>
-      <p><strong>Cena:</strong> {{ selectedVehicle.price | currency:'PLN' }}</p>
-      <p><strong>Przyspieszenie:</strong> {{ selectedVehicle.acceleration }} sek. do 100 km/h</p>
-      <p><strong>Max prędkość:</strong> {{ selectedVehicle.maxSpeed }} km/h</p>
-
-      <!-- Przycisk Zamknij -->
-      <button mat-button (click)="closeDetails()">Zamknij</button>
-      
-      <button mat-button class="reserve-button" *ngIf="selectedVehicle.availability" (click)="reserveVehicle(selectedVehicle)">Zarezerwuj</button>
+      <h2 mat-dialog-title class="dialog-title">{{ selectedVehicle.brand }} {{ selectedVehicle.model }}</h2>
+        <div class="vehicle-details-container">
+        <div class="vehicle-info">
+          <p><strong>Rok produkcji:</strong> {{ selectedVehicle.productionYear }}</p>
+          <p><strong>Typ pojazdu:</strong> {{ getVehicleTypeName(selectedVehicle.vehicleType) }}</p>
+          <p><strong>Typ nadwozia:</strong> {{ getBodyTypeName(selectedVehicle.bodyType) }}</p>
+          <p><strong>Przebieg:</strong> {{ selectedVehicle.mileage | number }} km</p>
+          <p><strong>Skrzynia biegów:</strong> {{ getTransmissionTypeName(selectedVehicle.transmission) }}</p>
+          <p><strong>Pojemność silnika:</strong> {{ selectedVehicle.engineCapacity }} L</p>
+          <p><strong>Paliwo:</strong> {{ getFuelTypeName(selectedVehicle.fuelType) }}</p>
+          <p><strong>Napęd:</strong> {{ getDrivetrainTypeName(selectedVehicle.drivetrain) }}</p>
+          <p><strong>Pojemność bagażnika:</strong> {{ selectedVehicle.trunkCapacity }} L</p>
+          <p><strong>Cena:</strong> {{ selectedVehicle.price | currency:'PLN' }}</p>
+          <p><strong>Przyspieszenie:</strong> {{ selectedVehicle.acceleration }} sek. do 100 km/h</p>
+          <p><strong>Max prędkość:</strong> {{ selectedVehicle.maxSpeed }} km/h</p>
+        </div>
+  
+        <div class="reservation-section">
+          <label for="startDate"><strong>Od:</strong></label>
+          <input type="date" id="startDate" [(ngModel)]="reservedFrom">
+  
+          <label for="endDate"><strong>Do:</strong></label>
+          <input type="date" id="endDate" [(ngModel)]="reservedTo">
+        </div>
+      </div>
+  
+      <!-- PRZYCISKI AKCJI -->
+      <div class="button-container">
+        <button mat-button class="close-button" (click)="closeDetails()">Zamknij</button>
+        <button mat-button class="reserve-button" *ngIf="selectedVehicle.availability" 
+        [disabled]="!reservedFrom || !reservedTo || invalidDateRange"
+        (click)="reserveVehicle(selectedVehicle)">Zarezerwuj</button>
+      </div>
     </div>
   </div>
+  
 </div>
+
+
+

@@ -5,6 +5,7 @@ import { AuthService } from '../../services/auth-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -18,12 +19,17 @@ export class HomeComponent implements OnInit {
   isLoggedIn: boolean = false;
   selectedVehicle: Vehicle | null = null;
   searchCriteria: any = {};
+  reservedFrom: Date | null = null;
+  reservedTo: Date | null = null;
+  invalidDateRange: boolean = false;
+  currentRoute: string = '';
 
   constructor(
     private vehicleService: VehicleService,
     private authService: AuthService,
     private dialog: MatDialog ,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute
   ) {}
   getVehicleTypeName(type: number | string): string {
     const mapping: Record<string | number, string> = {
@@ -110,18 +116,59 @@ export class HomeComponent implements OnInit {
   viewDetails(vehicle: Vehicle): void {
     console.log(vehicle + '   -2');
     this.selectedVehicle = vehicle;
+    if (!this.selectedVehicle) {
+      console.error("Błąd: Pojazd nie został wybrany.");
+    }
   }
 
   closeDetails(): void {
     this.selectedVehicle = null;
   }
 
+  validateDates() {
+    if (this.reservedFrom && this.reservedTo) {
+      this.invalidDateRange = new Date(this.reservedFrom) > new Date(this.reservedTo);
+    } else {
+      this.invalidDateRange = false;
+    }
+  }
+
 
   reserveVehicle(vehicle: Vehicle): void {
+    if (!this.reservedFrom || !this.reservedTo) {
+      console.log('Wybierz daty rezerwacji.');
+      return;
+    }    
+    const startDate = new Date(this.reservedFrom);
+    const endDate = new Date(this.reservedTo);
+    const userId = this.authService.getUserId();
+  
+    if (userId === null) {
+      console.error('Błąd: Użytkownik nie jest zalogowany.');
+      return;
+    }
+  
     if (!vehicle.availability) {
       console.log('Pojazd jest już zarezerwowany.');
       return;
     }
-  }
+
+    this.vehicleService.reserveVehicle(vehicle.id, this.reservedFrom, this.reservedTo, userId)
+      .subscribe(
+        (response) => {
+          vehicle.availability = false;
+          vehicle.reservedFrom = startDate;
+          vehicle.reservedTo = endDate;
+          vehicle.reservedById = userId;
   
-}
+          console.log(`Pojazd ${vehicle.brand} ${vehicle.model} zarezerwowany od ${this.reservedFrom} do ${this.reservedTo}.`);
+  
+          this.vehicles = this.vehicles.filter(v => v.id !== vehicle.id);
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          console.error('Błąd rezerwacji pojazdu:', error);
+        }
+      );
+  }
+}  
