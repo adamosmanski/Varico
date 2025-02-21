@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-
+import { AuthService } from '../../services/auth-service.service';
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
@@ -29,6 +29,7 @@ export class LoginDialogComponent {
   constructor(private fb: FormBuilder,
     private dialogRef: MatDialogRef<LoginDialogComponent>,
     private userService: UserService,
+    private authService: AuthService,
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -38,11 +39,18 @@ export class LoginDialogComponent {
   onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
-
+  
       this.userService.login(email, password).subscribe({
         next: (response) => {
           console.log('Zalogowano:', response);
-          this.dialogRef.close(response); 
+  
+          if (response.userId) {
+            const userId = response.userId;
+            this.authService.setUserId(userId);
+            this.dialogRef.close(response);
+          } else {
+            console.error('Błąd: Brak userId w odpowiedzi');
+          }
         },
         error: (error) => {
           this.errorMessage = error.error.message || 'Błąd logowania';
