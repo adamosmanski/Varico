@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Varico.Core.CQRS.CarModule;
 using Varico.Core.CQRS.UserModule;
+using Varico.EF.Models;
 
 namespace Varico.Core.Controllers
 {
@@ -45,6 +46,12 @@ namespace Varico.Core.Controllers
         {
             await _mediator.Send(command);
             return NoContent();
+        }
+        [HttpGet("search")]
+        public async Task<ActionResult<List<Vehicle>>> SearchVehicles([FromQuery] string Brand)
+        {
+            var vehicles = await _mediator.Send(new SearchVehiclesQuery { Brand = Brand });
+            return Ok(vehicles);
         }
     }
 }
