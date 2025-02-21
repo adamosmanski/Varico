@@ -52,15 +52,15 @@ namespace Varico.EF.Models
         [MaxLength(100)]
         public string Country { get; set; }
 
-        public virtual Cars? Car { get; set; }
+        public virtual Vehicle? Car { get; set; }
     }
     
     
     public enum VehicleType
     {
-        Osobowy,
-        Ciężarowy,
-        Motocykl
+        Passenger,
+        Truck,
+        Motorcycle
     }
 
     public enum BodyType
@@ -69,13 +69,6 @@ namespace Varico.EF.Models
         HATCHBACK,
         SEDAN,
         KOMBI,
-        COUPE,
-        VAN,
-        MINIVAN,
-        KABRIOLET,
-        LIFTBACK,
-        CROSSOVER,
-        ROADSTER,
-        PICK_UP
+        ANOTHER
     }
 }
