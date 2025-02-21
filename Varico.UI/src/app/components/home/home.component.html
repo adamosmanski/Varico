@@ -1,44 +1,70 @@
 <div class="home-container" [class.shifted]="isLoggedIn">
-    <div class="banner">
-      <div class="banner-content" *ngIf="!isLoggedIn; else loggedInBanner">
-        <h1>🚗 Z nami wynajmiesz tanio pojazd! 🚀</h1>
-        <p class="description">Najlepsze ceny, największy wybór, pełna wygoda.</p>
-        <p class="cta">Sprawdź dostępne pojazdy i zarezerwuj już teraz!</p>
-      </div>
-  
-      <ng-template #loggedInBanner>
-        <h1>Wyszukaj pojazdy</h1>
-        <form (ngSubmit)="searchVehicles()">
-          <label for="model">Model:</label>
-          <input id="model" [(ngModel)]="searchCriteria.model" name="model" type="text">
-  
-          <label for="year">Rok produkcji:</label>
-          <input id="year" [(ngModel)]="searchCriteria.year" name="year" type="number">
-  
-          <label for="dateFrom">Od:</label>
-          <input id="dateFrom" [(ngModel)]="searchCriteria.dateFrom" name="dateFrom" type="date">
-  
-          <label for="dateTo">Do:</label>
-          <input id="dateTo" [(ngModel)]="searchCriteria.dateTo" name="dateTo" type="date">
-  
-          <button mat-button type="submit">Szukaj</button>
-        </form>
-      </ng-template>
+  <div class="banner">
+    <div class="banner-content" *ngIf="!isLoggedIn; else loggedInBanner">
+      <h1>🚗 Z nami wynajmiesz tanio pojazd! 🚀</h1>
+      <p class="description">Najlepsze ceny, największy wybór, pełna wygoda.</p>
+      <p class="cta">Sprawdź dostępne pojazdy i zarezerwuj już teraz!</p>
     </div>
-  
-    <h2>Dostępne pojazdy</h2>
-  
-    <div class="vehicle-list" *ngIf="vehicles.length > 0; else noVehicles">
-      <div class="vehicle-card" *ngFor="let vehicle of vehicles">
-        <img [src]="vehicle.pictureURL || 'assets/default-car.jpg'" [alt]="vehicle.brand + ' ' + vehicle.model" />
-        <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
-        <p><strong>Rok:</strong> {{ vehicle.productionYear }}</p>
-        <button mat-button *ngIf="isLoggedIn" mat-button (click)="viewDetails(vehicle)">Szczegóły</button>
-      </div>
-    </div>
-  
-    <ng-template #noVehicles>
-      <p>Brak dostępnych pojazdów w tej chwili.</p>
+
+    <ng-template #loggedInBanner>
+      <h1>Wyszukaj pojazdy</h1>
+      <form (ngSubmit)="searchVehicles()">
+        <label for="model">Model:</label>
+        <input id="model" [(ngModel)]="searchCriteria.model" name="model" type="text">
+
+        <label for="year">Rok produkcji:</label>
+        <input id="year" [(ngModel)]="searchCriteria.year" name="year" type="number">
+
+        <label for="dateFrom">Od:</label>
+        <input id="dateFrom" [(ngModel)]="searchCriteria.dateFrom" name="dateFrom" type="date">
+
+        <label for="dateTo">Do:</label>
+        <input id="dateTo" [(ngModel)]="searchCriteria.dateTo" name="dateTo" type="date">
+
+        <button mat-button type="submit">Szukaj</button>
+      </form>
     </ng-template>
   </div>
+
+  <h2>Dostępne pojazdy</h2>
+
+  <div class="vehicle-list" *ngIf="vehicles.length > 0; else noVehicles">
+    <div class="vehicle-card" *ngFor="let vehicle of vehicles">
+      <img [src]="vehicle.pictureURL || 'assets/default-car.jpg'" [alt]="vehicle.brand + ' ' + vehicle.model" />
+      <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
+      <p><strong>Rok:</strong> {{ vehicle.productionYear }}</p>
+      <button mat-button *ngIf="isLoggedIn" mat-button (click)="viewDetails(vehicle)">Szczegóły</button>
+    </div>
+  </div>
+
+  <ng-template #noVehicles>
+    <p>Brak dostępnych pojazdów w tej chwili.</p>
+  </ng-template>
+
+
   
+  <div class="vehicle-details-modal" *ngIf="selectedVehicle">
+    <div class="vehicle-details-modal-content">
+      <h2 mat-dialog-title class="dialog-title">Szczegóły pojazdu</h2>
+      <h3>{{ selectedVehicle.brand }} {{ selectedVehicle.model }}</h3>
+      
+      <p><strong>Rok produkcji:</strong> {{ selectedVehicle.productionYear }}</p>
+      <p><strong>Typ pojazdu:</strong> {{ getVehicleTypeName(selectedVehicle.vehicleType) }}</p>
+      <p><strong>Typ nadwozia:</strong> {{ getBodyTypeName(selectedVehicle.bodyType) }}</p>
+      <p><strong>Przebieg:</strong> {{ selectedVehicle.mileage | number }} km</p>
+      <p><strong>Skrzynia biegów:</strong> {{ getTransmissionTypeName(selectedVehicle.transmission) }}</p>
+      <p><strong>Pojemność silnika:</strong> {{ selectedVehicle.engineCapacity }} L</p>
+      <p><strong>Paliwo:</strong> {{ getFuelTypeName(selectedVehicle.fuelType) }}</p>
+      <p><strong>Napęd:</strong> {{ getDrivetrainTypeName(selectedVehicle.drivetrain) }}</p>
+      <p><strong>Pojemność bagażnika:</strong> {{ selectedVehicle.trunkCapacity }} L</p>
+      <p><strong>Cena:</strong> {{ selectedVehicle.price | currency:'PLN' }}</p>
+      <p><strong>Przyspieszenie:</strong> {{ selectedVehicle.acceleration }} sek. do 100 km/h</p>
+      <p><strong>Max prędkość:</strong> {{ selectedVehicle.maxSpeed }} km/h</p>
+
+      <!-- Przycisk Zamknij -->
+      <button mat-button (click)="closeDetails()">Zamknij</button>
+      
+      <button mat-button class="reserve-button" *ngIf="selectedVehicle.availability" (click)="reserveVehicle(selectedVehicle)">Zarezerwuj</button>
+    </div>
+  </div>
+</div>
