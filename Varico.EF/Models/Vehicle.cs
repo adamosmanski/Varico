@@ -9,7 +9,7 @@ using System.Diagnostics.Contracts;
 
 namespace Varico.EF.Models
 {
-    public class Cars
+    public class Vehicle
     {
         [Key]
         public int Id { get; set; }
@@ -36,15 +36,13 @@ namespace Varico.EF.Models
         [Required]
         public bool Availability { get; set; }
 
-        public int ReservedById { get; set; }
+        public int? ReservedById { get; set; }
 
         [ForeignKey("ReservedById")]
-        public virtual Users ReservedBy { get; set; }
+        public virtual Users? ReservedBy { get; set; }
 
         [Required]
-        public string PictureURL { get; set; }
-
-
+        public string? PictureURL { get; set; }
     }
 
 }
