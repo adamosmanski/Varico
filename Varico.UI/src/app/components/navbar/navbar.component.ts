@@ -6,17 +6,21 @@ import { RegisterDialogComponent } from '../register-dialog/register-dialog.comp
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 import { AuthService } from '../../services/auth-service.service';
 import { CommonModule } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css'],
-  imports: [MatToolbarModule, MatButtonModule, CommonModule, MatDialogModule]
+  imports: [MatToolbarModule, MatButtonModule, CommonModule, MatDialogModule, RouterLink]
 })
 export class NavbarComponent {
   isLoggedIn = false;
-  constructor(private dialog: MatDialog, private authService: AuthService) {
+  constructor(private dialog: MatDialog, 
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
     });
@@ -44,6 +48,7 @@ export class NavbarComponent {
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/home']);
   }
 }
 

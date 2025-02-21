@@ -6,13 +6,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
   standalone: true,
-  imports: [CommonModule, MatSidenavModule, MatIconModule] 
+  imports: [CommonModule, MatSidenavModule, MatIconModule, RouterLink] 
 })
 export class SidebarComponent implements OnDestroy {
   isLoggedIn = false;

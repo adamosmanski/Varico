@@ -7,10 +7,12 @@ import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { HomeComponent } from "./components/home/home.component";
 
+import { ReservationComponent } from "./components/reservation/reservation.component";
+
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, SidebarComponent, CommonModule, HomeComponent],
+  imports: [RouterOutlet, NavbarComponent, SidebarComponent, CommonModule, HomeComponent,ReservationComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

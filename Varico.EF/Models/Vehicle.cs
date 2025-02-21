@@ -74,5 +74,8 @@ namespace Varico.EF.Models
 
         [Required]
         public double MaxSpeed { get; set; }
+
+        public DateOnly? DateStart { get; set; } 
+        public DateOnly? DateEnd { get; set; }
     }
 }

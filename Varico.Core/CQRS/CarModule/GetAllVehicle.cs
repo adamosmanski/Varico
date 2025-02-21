@@ -18,4 +18,31 @@ namespace Varico.Core.CQRS.CarModule
             return vehicles;
         }
     }
+
+    public class GetAllVehicleNotAvailableQuery : IRequest<IEnumerable<Vehicle>>
+    {
+        public int UserId { get; set; }
+        public GetAllVehicleNotAvailableQuery(int userId)
+        {
+            UserId = userId;
+        }
+    }
+
+    public class GetAllVehicleNotAvailableHandler : IRequestHandler<GetAllVehicleNotAvailableQuery, IEnumerable<Vehicle>>
+    {
+        private readonly VaricoDbContext _context;
+        public GetAllVehicleNotAvailableHandler(VaricoDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IEnumerable<Vehicle>> Handle(GetAllVehicleNotAvailableQuery request, CancellationToken cancellationToken)
+        {
+           
+            var vehicles = await _context.Vehicles
+                .Where(x => x.ReservedById == request.UserId && x.Availability == false)
+                .ToListAsync(cancellationToken);
+            return vehicles;
+        }
+    }
 }

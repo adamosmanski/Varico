@@ -26,6 +26,7 @@
 
 .banner-content .description {
   font-size: 1.2rem;
+  color:black;
   margin-bottom: 15px;
 }
 
@@ -190,4 +191,8 @@ button[mat-button]:active {
   font-weight: bold;
   width: 100%;
   border: none;
+}
+
+.near-return {
+  border: 3px solid red;
 }

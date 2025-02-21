@@ -1,0 +1,54 @@
+<div class="home-container shifted">
+  <div class="banner">
+    <div class="banner-content">
+      <h1>Zasady zwrotu pojazdów</h1>
+      <p class="description">Zwróć pojazd w tym samym stanie, w jakim go odebrałeś, aby uniknąć dodatkowych opłat. Pamiętaj o przestrzeganiu umowy wynajmu.</p>
+    </div>
+  </div>
+
+  <h2>Zarezerwowane pojazdy</h2>
+
+  <div class="vehicle-list" *ngIf="reservedVehicles.length > 0; else noVehicles">
+    <div class="vehicle-card" 
+     *ngFor="let vehicle of reservedVehicles"
+     [ngClass]="{'near-return': isNearReturnDate(vehicle.reservedTo)}">
+      <img [src]="vehicle.pictureURL || 'assets/default-car.jpg'" [alt]="vehicle.brand + ' ' + vehicle.model" />
+      <h3>{{ vehicle.brand }} {{ vehicle.model }}</h3>
+      <p><strong>Rok</strong> {{ vehicle.productionYear }}</p>
+      <button mat-button (click)="viewDetails(vehicle)">Szczegóły</button>
+    </div>
+  </div>
+
+  <ng-template #noVehicles>
+    <p>Brak dostępnych pojazdów w tej chwili.</p>
+  </ng-template>
+
+  <div class="vehicle-details-modal" *ngIf="selectedVehicle">
+    <div class="vehicle-details-modal-content">
+      <h2 mat-dialog-title class="dialog-title">{{ selectedVehicle.brand }} {{ selectedVehicle.model }}</h2>
+      <div class="vehicle-details-container">
+        <div class="vehicle-info">
+          <p><strong>Rok produkcji:</strong> {{ selectedVehicle.productionYear }}</p>
+          <p><strong>Typ pojazdu:</strong> {{ getVehicleTypeName(selectedVehicle.vehicleType) }}</p>
+          <p><strong>Typ nadwozia:</strong> {{ getBodyTypeName(selectedVehicle.bodyType) }}</p>
+          <p><strong>Przebieg:</strong> {{ selectedVehicle.mileage | number }} km</p>
+          <p><strong>Skrzynia biegów:</strong> {{ getTransmissionTypeName(selectedVehicle.transmission) }}</p>
+          <p><strong>Pojemność silnika:</strong> {{ selectedVehicle.engineCapacity }} L</p>
+          <p><strong>Paliwo:</strong> {{ getFuelTypeName(selectedVehicle.fuelType) }}</p>
+          <p><strong>Napęd:</strong> {{ getDrivetrainTypeName(selectedVehicle.drivetrain) }}</p>
+          <p><strong>Pojemność bagażnika:</strong> {{ selectedVehicle.trunkCapacity }} L</p>
+          <p><strong>Cena:</strong> {{ selectedVehicle.price | currency:'PLN' }}</p>
+          <p><strong>Przyspieszenie:</strong> {{ selectedVehicle.acceleration }} sek. do 100 km/h</p>
+          <p><strong>Max prędkość:</strong> {{ selectedVehicle.maxSpeed }} km/h</p>
+          <p><strong>Zarezerwowane do:</strong> {{ selectedVehicle.reservedTo | date:'dd-MM-yyyy'}}</p>
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button mat-button class="close-button" (click)="closeDetails()">Zamknij</button>
+        <button mat-button class="return-button" (click)="returnVehicle(selectedVehicle.id)">Zwróć</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
