@@ -121,4 +121,15 @@ export class ReservationComponent implements OnInit {
       }
     });
   }
+
+  extendReservation(vehicleId: number): void {
+    this.vehicleService.extendSelectedReservation(vehicleId).subscribe({
+      next: () => {
+        this.selectedVehicle = null;
+      },
+      error: (err) => {
+        console.error("Błąd:", err);
+      }
+    });
+  }
 }
