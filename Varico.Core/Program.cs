@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Varico.Core.Services.PasswordService;
+using Varico.Core.Services.ReservationNotification;
 using Varico.EF.Models;
 
 namespace Varico.Core
@@ -10,7 +11,7 @@ namespace Varico.Core
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
             // Add services to the container.
             ConfigureServices(builder);
 
@@ -21,6 +22,11 @@ namespace Varico.Core
             var app = builder.Build();
 
             app.UseCors("AllowAll");
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ReservationHub>("/reservationHub");
+            });
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -40,7 +46,7 @@ namespace Varico.Core
         }
 
         public static void ConfigureServices(IHostApplicationBuilder builder)
-        {
+        { 
             builder.Services.AddDbContext<VaricoDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
@@ -54,6 +60,8 @@ namespace Varico.Core
                            .AllowAnyHeader();
                 });
             });
+            builder.Services.AddSignalR();
+            builder.Services.AddHostedService<ReservationNotificationService>();
             builder.Services.AddSingleton<IPasswordService, PasswordService>();
         }
     }
