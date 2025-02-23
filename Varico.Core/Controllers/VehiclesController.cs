@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Varico.Core.CQRS.CarModule;
-using Varico.Core.CQRS.UserModule;
 using Varico.EF.Models;
 
 namespace Varico.Core.Controllers
@@ -52,6 +51,19 @@ namespace Varico.Core.Controllers
         {
             var vehicles = await _mediator.Send(new SearchVehiclesQuery { Brand = Brand });
             return Ok(vehicles);
+        }
+
+        [HttpPost("extend/{vehicleId}")]
+        public async Task<IActionResult> ExtendReservation(int vehicleId)
+        {
+            var result = await _mediator.Send(new ExtendReservationCommand(vehicleId));
+
+            if (!result)
+            {
+                return NotFound(new { message = "Nie znaleziono rezerwacji." }); ;
+            }
+
+            return Ok(new { message = "Rezerwacja przedłużona o 7 dni."});
         }
     }
 }
