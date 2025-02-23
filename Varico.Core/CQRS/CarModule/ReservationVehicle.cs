@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Varico.Core.CQRS.UserModule;
+using Varico.Core.CQRS.CarModule;
 using Varico.EF.Models;
 
-namespace Varico.Core.CQRS.UserModule
+namespace Varico.Core.CQRS.CarModule
 {
     public class VehicleReservationRequest : IRequest<Result>
     {
