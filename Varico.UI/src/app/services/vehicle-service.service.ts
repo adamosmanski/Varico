@@ -53,4 +53,8 @@ export class VehicleService {
   returnReservedVehicles(vehicleId: number): Observable<void> {
     return this.http.patch<void>(`${this.apiUrl}/returnReservedVehicle`, { vehicleId });
   }
+
+  extendSelectedReservation(vehicleId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/extend/${vehicleId}`, {});
+  }
 }
